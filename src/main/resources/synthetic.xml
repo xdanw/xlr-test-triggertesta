@@ -1,0 +1,39 @@
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+    <type type="nexus.PublishedArtifact" extends="xlrelease.ReleaseTrigger" description="Triggers release when new version of artifact is published to Sonatype Nexus repository">
+       <!-- common -->
+       <property name="groupId" required="true" description="Group ID of the artifact"/>
+       <property name="artifactId" required="true" description="Artifact ID of the artifact"/>
+       <property name="version" default="LATEST" required="true" description="Version of the artifact. v3 doesn't support 'LATEST', etc. v2 and below supports resolving of 'LATEST'(default), 'RELEASE' and snapshot versions (e.g. '1.0-SNAPSHOT'). Specify 'LATEST' to trigger on both, release and snapshot versions of a particular artifact. With 'RELEASE' only release versions will be tracked. Triggering on release version re-deployments (e.g. 1.0.0) is not supported"/>
+       <property name="serverV3" kind="boolean" default="false" required="true" description="Is this a Nexus v3 server?"/>
+
+       <!-- repository -->
+       <property name="server" category="Repository" referenced-type="nexus.Server" kind="ci" description="Sonatype Nexus server to poll"/>
+       <property name="repositoryId" category="Repository" required="true" description="Repository ID to watch, e.g. releases, snapshots, apache-snapshots"/>
+       <property name="username" category="Repository" default="" required="false" description="Custom username to override global server configuration"/>
+       <property name="password" category="Repository" default="" required="false" password="true" description="Custom password to override global server configuration"/>
+
+       <!-- options -->
+       <property name="packaging" category="Options" required="false" description="(v2 only) Packaging type of the artifact (e.g. 'jar', 'war')"/>
+       <property name="classifier" category="Options" required="false" description="(v2 only) Classifier of the artifact"/>
+       <property name="extension" category="Options" required="false" description="(v2 only) Extension of the artifact"/>
+       <property name="triggerOnInitialPublish" category="Options" kind="boolean" default="false" required="false" description="Should suppress error when artifact not found for the given GAV coordinates. Set this to true when artifact was never published to Nexus and you want to trigger a release on the initial publish. Default value is 'false'"/>
+
+       <!-- output variables -->
+       <property name="artifactVersion" category="variables" required="false" description="Latest artifact version. For Snapshots the version includes timestamp and build number"/>
+       <property name="artifactBaseVersion" category="variables" required="false" description="Latest base artifact version. For Releases same as 'artifactVersion', for Snapshots base version (i.e. 1.0-SNAPSHOT) without additional qualifiers"/>
+       <property name="artifactSnapshotBuildNumber" category="variables" required="false" description="Latest artifact snapshot build number"/>
+       <property name="artifactRepositoryPath" category="variables" required="false" description="Artifact path relative to the selected Nexus repository"/>
+       <property name="artifactDownloadUrl" category="variables" required="false" description="Download URL"/>
+    </type>
+
+    <type type="nexus.Server" extends="configuration.HttpConnection">
+       <property name="isVersion3" kind="boolean" default="false" description="Is this a Nexus v3 server?" />
+       <property name="checkConfigurationPath" hidden="true" default="/"/>
+       <property name="checkConfigurationContentType" hidden="true" default="application/json"/>
+       <property name="scriptLocation" hidden="true" default="configuration/HttpConnectionCheck.py"/>
+    </type>
+
+</synthetic>
