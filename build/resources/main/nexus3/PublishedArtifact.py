@@ -10,7 +10,7 @@
 import sys, string, urllib
 import com.xhaus.jyson.JysonCodec as json
 
-if serverV3:
+if server.serverV3:
     RESOLVE_PATH = 'service/rest/v1/search'
     RESOLVE_PARAMETERS = {
         'repository': repository,
@@ -55,7 +55,7 @@ else:
     data = resolution.get('data')
 
     # nexus v2 and below
-    if not serverV3:
+    if not server.serverV3:
 
         version = str(data.get('version'))
         triggerState = version
