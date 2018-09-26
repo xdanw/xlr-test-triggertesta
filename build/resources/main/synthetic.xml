@@ -3,23 +3,23 @@
            xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
 
     <type-modification type="nexus.PublishedArtifact" extends="xlrelease.ReleaseTrigger" description="Triggers release when new version of artifact is published to Sonatype Nexus repository">
-       <!-- Inherits: groupId, artifactId, versionId --->
+       <!-- Inherits: groupId, artifactId, versionId -->
 
        <!-- Inherits: server, repositoryId, username, password -->
        <!-- Inherits packaging, classifier, extention; but these are not usable in V3 -->
        <!-- Inherits triggerOnInitialPublish -->
 
        <!-- output variables -->
-       <!-- inherits artifactVersion, artifactBaseVersion, artifactSnapshotBuildNumber, artifactRepositoryPath --->
-       <!-- V3 will fill version, baseversion, repositorypath --->
+       <!-- inherits artifactVersion, artifactBaseVersion, artifactSnapshotBuildNumber, artifactRepositoryPath -->
+       <!-- V3 will fill version, baseversion, repositorypath -->
        <!-- add download url (optional) -->
        <property name="artifactDownloadUrl" category="variables" required="false" description="Download URL"/>
-    </type>
+    </type-modification>
 
     <type-modification type="nexus.Server" extends="configuration.HttpConnection">
        <!-- Add serverV3 flag -->
        <property name="serverV3" kind="boolean" default="false" required="true" description="Is this a Nexus v3 server?"/>
        <!-- Inherits: checkConfigurationPath, checkConfigurationContentType, scriptLocation -->
-    </type>
+    </type-modification>
 
 </synthetic>
