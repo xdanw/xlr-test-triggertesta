@@ -10,7 +10,10 @@
 import sys, string, urllib
 import com.xhaus.jyson.JysonCodec as json
 
-if server.serverV3:
+serverV3 = server['serverV3']
+
+if serverV3:
+    print "Nexus server: version 3+."
     RESOLVE_PATH = 'service/rest/v1/search'
     RESOLVE_PARAMETERS = {
         'repository': repository,
@@ -45,7 +48,7 @@ if not response.isSuccessful():
         # the following initialisation is to enable a scenario where we wish
         # to trigger a release on a first publish of an artifact to Nexus
         if not triggerState:
-            artifactVersion = triggerState = '0.0.0'
+            assetVersion = triggerState = '0.0.0'
     else:
         print "Failed to fetch artifact metadata from Nexus repository %s" % server['url']
         response.errorDump()
@@ -55,7 +58,7 @@ else:
     data = resolution.get('data')
 
     # nexus v2 and below
-    if not server.serverV3:
+    if not serverV3:
 
         version = str(data.get('version'))
         triggerState = version
@@ -78,3 +81,9 @@ else:
         assetPath = str(resolution.get('items')[0].get('assets')[0].get('path')) if resolution.get('items')[0].get('assets')[0].get('path') else ''
         assetDownloadUrl = str(resolution.get('items')[0].get('assets')[0].get('downloadUrl')) if resolution.get('items')[0].get('assets')[0].get('downloadUrl') else ''
         # assetFormat = str(assets.get('format')) if assets.get('format') else ''
+
+        # debug
+        print "Nexus v3 data received. \r\n";
+        print "triggerState: " + version;
+        print "assetPathRepository: " + assetRepository;
+        print "assetPath: " + assetPath;
