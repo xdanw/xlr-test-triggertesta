@@ -16,7 +16,7 @@ if serverV3:
     print "Nexus server: version 3+."
     RESOLVE_PATH = 'service/rest/v1/search'
     RESOLVE_PARAMETERS = {
-        'repository': repository,
+        'repository': repositoryId,
         'maven.groupId': groupId,
         'maven.artifactId': artifactId,
         'maven.baseVersion': version
@@ -76,14 +76,15 @@ else:
         triggerState = version
 
         # populate output variables
-        assetVersion = version
-        assetRepository = str(resolution.get('items')[0].get('assets')[0].get('repository')) if resolution.get('items')[0].get('assets')[0].get('repository') else ''
-        assetPath = str(resolution.get('items')[0].get('assets')[0].get('path')) if resolution.get('items')[0].get('assets')[0].get('path') else ''
-        assetDownloadUrl = str(resolution.get('items')[0].get('assets')[0].get('downloadUrl')) if resolution.get('items')[0].get('assets')[0].get('downloadUrl') else ''
+        artifactVersion = version
+        # Not populated: artifactBaseVersion, artifactSnapshotBuildNumber
+        # artifactRepository = str(resolution.get('items')[0].get('assets')[0].get('repository')) if resolution.get('items')[0].get('assets')[0].get('repository') else ''
+        artifactRepositoryPath = str(resolution.get('items')[0].get('assets')[0].get('path')) if resolution.get('items')[0].get('assets')[0].get('path') else ''
+        artifactDownloadUrl = str(resolution.get('items')[0].get('assets')[0].get('downloadUrl')) if resolution.get('items')[0].get('assets')[0].get('downloadUrl') else ''
         # assetFormat = str(assets.get('format')) if assets.get('format') else ''
 
         # debug
         print "Nexus v3 data received. \r\n";
-        print "triggerState: " + version;
-        print "assetPathRepository: " + assetRepository;
-        print "assetPath: " + assetPath;
+
+    # debug
+    print "artifactRepositoryPath: " + artifactRepositoryPath;
