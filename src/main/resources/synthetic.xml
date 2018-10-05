@@ -2,24 +2,7 @@
            xmlns="http://www.xebialabs.com/deployit/synthetic"
            xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
 
-    <type-modification type="nexus.PublishedArtifact">
-       <!-- Inherits: groupId, artifactId, versionId -->
-
-       <!-- Inherits: server, repositoryId, username, password -->
-       <!--           packaging, classifier, extention (these are not usable in V3) -->
-       <!--           triggerOnInitialPublish -->
-
-       <!-- Output variables -->
-       <!-- Inherits: artifactVersion, artifactBaseVersion, artifactSnapshotBuildNumber, artifactRepositoryPath -->
-       <!-- V3 will fill: version, baseversion, repositorypath -->
-       <!-- Add download url (usage is optional) -->
-       <property name="artifactDownloadUrl" category="variables" required="false" description="Artifact download URL"/>
-    </type-modification>
-
-    <type-modification type="nexus.Server">
-       <!-- Add serverV3 flag -->
-       <property name="serverV3" kind="boolean" default="false" required="true" description="Nexus server version 3+"/>
-       <!-- Inherits: checkConfigurationPath, checkConfigurationContentType, scriptLocation -->
-    </type-modification>
+   <type type="testScript.testTriggerA" extends="xlrelease.ReleaseTrigger" description="A test trigger that will always fire.">
+   </type>
 
 </synthetic>
